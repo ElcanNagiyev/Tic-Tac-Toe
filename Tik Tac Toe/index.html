@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+      .cell{
+        border: 1px black solid;
+        width: 100px;
+        height: 100px;
+        font-size: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container{
+        display: flex;
+      }
+      .skor{
+        display: flex;
+        justify-content: space-between;
+        width: 200px;
+        font-size: 50px;
+        margin-bottom: 10px;
+      }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <div class="container-1">
+            <div id="0" class="cell"></div>
+            <div id="1" class="cell"></div>
+            <div id="2" class="cell"></div>
+        </div>
+        <div class="container-2">
+            <div id="3" class="cell"></div>
+            <div id="4" class="cell"></div>
+            <div id="5" class="cell"></div>
+        </div>
+        <div class="container-3">
+            <div id="6" class="cell"></div>
+            <div id="7" class="cell"></div>
+            <div id="8" class="cell"></div>
+        </div>
+    </div>
+
+    <div class="skor">
+        <div class="skor1">x:0</div>
+        <div class="skor2">o:0</div>
+    </div>
+
+    <button>Next Round</button>
+    
+
+    <script>
+        let cells=document.querySelectorAll('.cell')
+        let skor1=document.querySelector('.skor1')
+        let skor2=document.querySelector('.skor2')
+        let btn=document.querySelector('button')
+
+        let array=[
+            [0,1,2],
+            [3,4,5],
+            [6,7,8],
+            [0,3,6],
+            [1,4,7],
+            [2,5,8],
+            [0,4,8],
+            [2,4,6]
+        ]
+
+        n=1;
+
+        skor_1=0;
+        skor_2=0; 
+
+        let arrayX=[];
+        let arrayO=[];
+
+     for(let i=0; i<cells.length;i++){
+        cells[i].addEventListener('click',(event)=>{
+            if(n%2==1){
+               event.target.innerText='x' 
+               n++
+               arrayX.push(i)
+               console.log(arrayX)
+            }
+            else{
+                event.target.innerText='o' 
+                n++
+                arrayO.push(i)
+            }
+
+            if(arrayX.length>=3){
+                for(let j=0; j<array.length; j++){
+                    s=0;
+                    for(let k=0; k<3; k++){
+                        if(arrayX.includes(array[j][k])){
+                            s++;
+                            if(s==3){
+                                for(let t=0; t<cells.length; t++){
+                                    if(cells[t].innerText=='x'){
+                                        cells[t].style.background='green'
+                                    }      
+                                }
+                                skor1.innerText=`x:${++skor_1}`
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            if(arrayO.length>=3){
+                for(let j1=0; j1<array.length; j1++){
+                    s1=0;
+                    for(let k1=0; k1<3; k1++){
+                        if(arrayO.includes(array[j1][k1])){
+                            s1++;
+                            if(s1==3){
+                                for(let t1=0; t1<cells.length; t1++){
+                                    if(cells[t1].innerText=='o'){
+                                        cells[t1].style.background='green'                                   
+                                    }      
+                                }
+                                skor2.innerText=`o:${++skor_2}`
+                            }
+                        }
+                    }
+                }
+            }
+
+
+
+
+        })
+     }
+
+     btn.addEventListener('click', function(){
+
+        for(let m=0; m<cells.length; m++){
+            cells[m].style.background='white'
+            cells[m].innerText='';
+        }
+        arrayX=[];
+        arrayO=[];
+     })
+    
+
+    </script>
+</body>
+</html>
